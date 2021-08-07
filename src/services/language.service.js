@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-self-import */
 /* eslint-disable radix */
 const crypto = require('crypto');
 const httpStatus = require('http-status');
@@ -23,7 +25,8 @@ const getTranslation = async (query) => {
       throw new ApiError(httpStatus.UNAUTHORIZED, `Translation not found`);
     }
     return foundTranslation;
-  } else if (query.ibibio) {
+  }
+  if (query.ibibio) {
     const foundTranslation = await Language.findOne({ ibibio: query.ibibio });
     if (!foundTranslation) {
       throw new ApiError(httpStatus.UNAUTHORIZED, `Translation not found`);
@@ -54,7 +57,36 @@ const saveWord = async (body) => {
   }
 };
 
+const updateWord = async (query, body) => {
+  try {
+    const { english, ibibio } = body;
+    const updatedWord = await Language.updateOne(
+      { _id: query },
+      {
+        english,
+        ibibio,
+      }
+    );
+    return updatedWord;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
+const deleteWord = async (query) => {
+  try {
+    const deleted = await Language.deleteOne({ _id: query });
+    return {
+      message: 'successfully deleted',
+    };
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
 module.exports = {
   getTranslation,
   saveWord,
+  updateWord,
+  deleteWord,
 };

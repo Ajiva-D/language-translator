@@ -20,7 +20,23 @@ const saveWord = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(response);
 });
 
+/**
+ * Save word
+ * @public
+ */
+const updateWord = catchAsync(async (req, res) => {
+  const response = await languageService.updateWord(req.params.id, req.body);
+  res.status(httpStatus.OK).json(response);
+});
+
+const deleteWord = catchAsync(async (req, res) => {
+  const response = await languageService.deleteWord(req.params.id);
+  res.status(httpStatus.OK).json(response);
+});
+
 module.exports = {
   getTranslation,
   saveWord,
+  updateWord,
+  deleteWord,
 };

@@ -6,7 +6,7 @@ const languageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-		ibibio: {
+    ibibio: {
       type: String,
       required: true,
     },
