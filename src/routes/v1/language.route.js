@@ -9,5 +9,6 @@ router.get('/', languageController.getTranslation);
 router.post('/', languageController.saveWord);
 router.patch('/:id', languageController.updateWord);
 router.delete('/:id', languageController.deleteWord);
+router.get('/admin/all', languageController.adminGetAllTranslations);
 
 module.exports = router;

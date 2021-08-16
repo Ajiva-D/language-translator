@@ -35,6 +35,15 @@ const getTranslation = async (query) => {
   }
 };
 
+const adminGetAllTranslations = async () => {
+  try {
+    const allTranslations = await Language.find();
+    return allTranslations;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
 /**
  *
  * @param {string} user
@@ -89,4 +98,5 @@ module.exports = {
   saveWord,
   updateWord,
   deleteWord,
+  adminGetAllTranslations,
 };

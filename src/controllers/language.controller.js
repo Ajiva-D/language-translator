@@ -34,9 +34,15 @@ const deleteWord = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(response);
 });
 
+const adminGetAllTranslations = catchAsync(async (req, res) => {
+  const response = await languageService.adminGetAllTranslations();
+  res.status(httpStatus.OK).json(response);
+});
+
 module.exports = {
   getTranslation,
   saveWord,
   updateWord,
   deleteWord,
+  adminGetAllTranslations,
 };
