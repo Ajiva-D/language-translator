@@ -33,6 +33,20 @@ const getTranslation = async (query) => {
     }
     return foundTranslation;
   }
+  if (query.igbo) {
+    const foundTranslation = await Language.findOne({ igbo: query.igbo });
+    if (!foundTranslation) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, `Translation not found`);
+    }
+    return foundTranslation;
+  }
+  if (query.ijaw) {
+    const foundTranslation = await Language.findOne({ ijaw: query.ijaw });
+    if (!foundTranslation) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, `Translation not found`);
+    }
+    return foundTranslation;
+  }
 };
 
 const adminGetAllTranslations = async () => {
@@ -52,14 +66,16 @@ const adminGetAllTranslations = async () => {
  */
 
 const saveWord = async (body) => {
+  const { english, ibibio, ijaw, igbo } = body;
   try {
-    console.log(body);
-
-    const { english, ibibio } = body;
-    const savedWord = await Language.create({
+    const savedWord = new Language({
       english,
       ibibio,
+      ijaw,
+      igbo,
     });
+    await savedWord.save();
+    console.log(savedWord);
     return savedWord;
   } catch (error) {
     logger.error(error);
@@ -68,14 +84,7 @@ const saveWord = async (body) => {
 
 const updateWord = async (query, body) => {
   try {
-    const { english, ibibio } = body;
-    const updatedWord = await Language.updateOne(
-      { _id: query },
-      {
-        english,
-        ibibio,
-      }
-    );
+    const updatedWord = await Language.updateOne({ _id: query }, { ...body });
     return updatedWord;
   } catch (error) {
     logger.error(error);

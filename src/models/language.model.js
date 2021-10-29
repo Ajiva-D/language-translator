@@ -8,7 +8,12 @@ const languageSchema = new mongoose.Schema(
     },
     ibibio: {
       type: String,
-      required: true,
+    },
+    ijaw: {
+      type: String,
+    },
+    igbo: {
+      type: String,
     },
   },
   {
